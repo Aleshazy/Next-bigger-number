@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(char *a, char *b) {
+    char temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+
+void sort(char arr[], int low, int high) {
+    for (int i = low; i <= high; i++) {
+        for (int j = i + 1; j <= high; j++) {
+            if (arr[i] > arr[j]) {
+                swap(&arr[i], &arr[j]);
+            }
+        }
+    }
+}
+
+int main() {
+    char * number;
+    number = (char*)malloc(50 * sizeof(char));
+    
+    printf("Enter a num: ");
+    scanf("%s", number);
+
+    int n = 0;
+    while (number[n] != '\0') n++;
+
+    int i, j;
+    for(i = n - 1; i > 0; i--) {
+        if(number[i] > number[i - 1]) {
+            break;
+        }
+    }
+
+    if(i == 0) {
+        printf("Not possible\n");
+        return 0;
+    }
+
+    int x = number[i - 1], smallest = i;
+    for(j = i + 1; j < n; j++) {
+        if(number[j] > x && number[j] < number[smallest]) {
+            smallest = j;
+        }
+    }
+
+    swap(&number[i - 1], &number[smallest]);
+
+    sort(number, i, n - 1);
+
+    printf("%s\n", number);
+
+    return 0;
+}
